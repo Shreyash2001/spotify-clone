@@ -1,0 +1,37 @@
+.myinput {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+}
+
+.myinput input {
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.532);
+    background-color: transparent;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 8px 0px;
+    width: 20vw;
+    height: 30px;
+    font-size: 16px;
+}
+
+.myinput input:hover {
+    border: 1px solid #fff;
+}
+
+.myinput input:focus {
+    border: 1px solid #fff;
+}
+
+@media (width < 768px) {
+    .myinput {
+        width: 100%;
+    }
+
+    .myinput input {
+        width: 100%;
+
+    }
+}

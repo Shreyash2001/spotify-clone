@@ -1,0 +1,55 @@
+.LoginScreen {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(rgba(9, 9, 9, 0.836) 0%, rgb(0, 0, 0) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_info_box {
+    background: linear-gradient(rgba(9, 9, 9, 0.836) 0%, rgb(0, 0, 0) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+}
+
+.login_info_box img {
+    width: 60px;
+    height: 60px;
+}
+
+.login_button {
+    width: 21.5vw !important;
+    background-color: #1ed760 !important;
+    color: #222 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-transform: inherit !important;
+    border-radius: 22px !important;
+    font-family: "Lora", serif !important;
+}
+
+@media (width < 768px) {
+    .login_info_box {
+        width: 90%;
+        height: 100%;
+        padding: 0px 20px;
+    }
+
+    .my_login_form {
+        display: block;
+        width: 85%;
+        margin-right: 20px;
+    }
+
+    .login_button {
+        width: 108% !important;
+    }
+
+
+}
