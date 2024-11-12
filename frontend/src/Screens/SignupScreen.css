@@ -1,0 +1,74 @@
+.signup {
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.signup_box h1 {
+    font-size: 45px;
+    font-weight: 900;
+    text-align: center;
+    max-width: 320px;
+    margin: 10px 0px;
+}
+
+.signup_box img {
+    width: 60px;
+    height: 60px;
+}
+
+.login_button {
+    width: 21.5vw !important;
+    background-color: #1ed760 !important;
+    color: #222 !important;
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    text-transform: inherit !important;
+    border-radius: 22px !important;
+    font-family: "Lora", serif !important;
+}
+
+.steps_title {
+    display: flex;
+    align-items: center;
+
+}
+
+.steps_title p {
+    margin: 2px 0px;
+    font-weight: 700;
+}
+
+@media (width < 768px) {
+
+
+    .login_info_box {
+        width: 90%;
+        height: 100%;
+        padding: 0px 20px;
+    }
+
+    .my_login_form {
+        display: block;
+        width: 85%;
+        margin-right: 20px;
+    }
+
+    .login_button {
+        width: 108% !important;
+    }
+
+
+}

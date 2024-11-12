@@ -2,26 +2,34 @@
     display: flex;
     flex-direction: column;
     margin: 20px 0px;
+
+}
+
+.myinput label {
+    margin-bottom: 10px;
+}
+
+.myinput_without_label {
+    border: 1px solid rgba(255, 255, 255, 0.532);
+    border-radius: 12px;
 }
 
 .myinput input {
     outline: 0;
-    border: 1px solid rgba(255, 255, 255, 0.532);
+    border: none;
     background-color: transparent;
     color: #fff;
     padding: 10px;
-    border-radius: 8px;
-    margin: 8px 0px;
-    width: 20vw;
+    width: 90%;
     height: 30px;
     font-size: 16px;
 }
 
-.myinput input:hover {
+.myinput_without_label:hover {
     border: 1px solid #fff;
 }
 
-.myinput input:focus {
+.myinput_without_label:focus-within {
     border: 1px solid #fff;
 }
 

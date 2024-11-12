@@ -3,8 +3,10 @@ import "./LoginScreen.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import MyInput from "../Components/MyInput";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 function LoginScreen() {
+  const navigate = useNavigate();
   const GoogleLoginButton = () => {
     return (
       <div>
@@ -56,16 +58,28 @@ function LoginScreen() {
           }}
         >
           <img src="spotify.png" alt="" />
-          <h1>Log in to Spotify</h1>
+          <h1
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: "900",
+              textAlign: "center",
+            }}
+          >
+            Log in to Spotify
+          </h1>
         </div>
         <div style={{ marginBottom: "20px" }}>
           <GoogleLoginButton />
         </div>
+
         <hr style={{ width: "100%", border: "1px solid #3833336b" }} />
         <MyForm />
         <span style={{ margin: "30px 0px", fontSize: "14px" }}>
           Don't Have an Account?{" "}
-          <span style={{ textDecoration: "underline", cursor: "pointer" }}>
+          <span
+            onClick={() => navigate("/signup")}
+            style={{ textDecoration: "underline", cursor: "pointer" }}
+          >
             {" "}
             Sign up now!
           </span>
