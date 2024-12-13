@@ -6,7 +6,7 @@ import MyButton from "./MyButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { coverImage } from "../utils/utility";
 
-function Step4({ selectFavourites, alreadySelectedFavourites }) {
+function Step4({ selectFavourites, alreadySelectedFavourites, nextClicked }) {
   const [favourites, setFavourites] = useState([]);
   const getLanguageCard = (data) => {
     return (
@@ -101,6 +101,7 @@ function Step4({ selectFavourites, alreadySelectedFavourites }) {
       </Box>
       <div>
         <MyButton
+          onClick={nextClicked}
           label={"Complete"}
           isDisabled={favourites.length > 0 ? false : true}
         />

@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import useAuthStore from "../stores/authStore";
 
 function SignupScreen() {
   const [step, setStep] = useState(1);
@@ -24,15 +25,14 @@ function SignupScreen() {
     gender: "",
     favorites: [],
   });
+  const { signup, isLoading, error, clearError } = useAuthStore();
   const navigate = useNavigate();
   const GoogleLoginButton = () => {
     return (
       <div>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_KEY}>
           <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              console.log(credentialResponse);
-            }}
+            onSuccess={(credentialResponse) => {}}
             onError={() => {
               console.log("Login Failed");
             }}
@@ -45,7 +45,7 @@ function SignupScreen() {
     setFormData({ ...formData, email: email });
     nextStep();
   };
-  console.log(formData);
+
   const step2NextClicked = (password) => {
     setFormData({ ...formData, password: password });
     nextStep();
@@ -62,7 +62,7 @@ function SignupScreen() {
     nextStep();
   };
   const step4NextClicked = () => {
-    console.log("hi i am 2 clicked");
+    signup(formData);
   };
   const step4SelectedCards = (data) => {
     setFormData({ ...formData, favorites: data });
@@ -79,7 +79,6 @@ function SignupScreen() {
     if (step === 4) setProgress(progress - 10);
     else setProgress(progress - 45);
     step > 1 && setStep(step - 1);
-    console.log(step);
   };
   const renderStep = () => {
     switch (step) {

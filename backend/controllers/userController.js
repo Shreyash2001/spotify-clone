@@ -1,0 +1,84 @@
+const bcrypt = require("bcrypt");
+const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+
+const ACCESS_TOKEN_SECRET =
+  process.env.ACCESS_TOKEN_SECRET || "your_access_token_secret";
+const REFRESH_TOKEN_SECRET =
+  process.env.REFRESH_TOKEN_SECRET || "your_refresh_token_secret";
+
+const signup = async (req, res) => {
+  try {
+    const { name, email, password, dob, gender } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User already exists. Please log in." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const accessToken = jwt.sign({ email }, ACCESS_TOKEN_SECRET, {
+      expiresIn: "15m",
+    });
+    const refreshToken = jwt.sign({ email }, REFRESH_TOKEN_SECRET, {
+      expiresIn: "7d",
+    });
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      gender,
+      dob,
+      refreshToken,
+    });
+    await newUser.save();
+    return res.status(201).json({
+      message: "User registered successfully!",
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password." });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid email or password." });
+    }
+
+    const accessToken = jwt.sign({ email: user.email }, ACCESS_TOKEN_SECRET, {
+      expiresIn: "15m",
+    });
+    const refreshToken = jwt.sign({ email: user.email }, REFRESH_TOKEN_SECRET, {
+      expiresIn: "7d",
+    });
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Login successful!",
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
+  }
+};
+
+module.exports = { signup, login };
