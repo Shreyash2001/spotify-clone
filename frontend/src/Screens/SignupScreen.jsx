@@ -23,7 +23,7 @@ function SignupScreen() {
     month: "",
     year: "",
     gender: "",
-    favorites: [],
+    favourites: [],
   });
   const { signup, isLoading, error, clearError } = useAuthStore();
   const navigate = useNavigate();
@@ -38,6 +38,20 @@ function SignupScreen() {
             }}
           />
         </GoogleOAuthProvider>
+      </div>
+    );
+  };
+  const getLoader = () => {
+    return (
+      <div className="music_loader_container">
+        <img
+          style={{ width: "150px", height: "150px" }}
+          src="music_loading.gif"
+          alt="loading..."
+        />
+        <div>
+          <h3 style={{ margin: "0px" }}>Setting up your Account</h3>
+        </div>
       </div>
     );
   };
@@ -65,7 +79,7 @@ function SignupScreen() {
     signup(formData);
   };
   const step4SelectedCards = (data) => {
-    setFormData({ ...formData, favorites: data });
+    setFormData({ ...formData, favourites: data });
   };
   const nextStep = () => {
     if (step === 3) {
@@ -110,7 +124,7 @@ function SignupScreen() {
         return (
           <Step4
             nextClicked={step4NextClicked}
-            alreadySelectedFavourites={formData?.favorites}
+            alreadySelectedFavourites={formData?.favourites}
             selectFavourites={step4SelectedCards}
           />
         );
@@ -192,6 +206,7 @@ function SignupScreen() {
             alignItems: "center",
             marginBottom: "10px",
             width: "100%",
+            position: "relative",
           }}
         >
           <img src="spotify.png" alt="" />
@@ -214,6 +229,7 @@ function SignupScreen() {
               />
             </Box>
           )}
+          {isLoading && <div>{getLoader()}</div>}
         </div>
         {step !== 1 && (
           <div style={{ display: "flex", alignItems: "start", width: "100%" }}>
@@ -231,6 +247,7 @@ function SignupScreen() {
             {renderStep()}
           </motion.div>
         </div>
+
         {step === 1 && getDirectLogin()}
       </div>
     </div>

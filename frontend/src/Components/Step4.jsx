@@ -99,7 +99,13 @@ function Step4({ selectFavourites, alreadySelectedFavourites, nextClicked }) {
           ))}
         </Grid2>
       </Box>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <MyButton
           onClick={nextClicked}
           label={"Complete"}

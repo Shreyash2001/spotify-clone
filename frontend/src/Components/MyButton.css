@@ -1,5 +1,5 @@
 .my_login_button_active {
-    width: 21.5vw !important;
+    width: 280px !important;
     background-color: #1ed760 !important;
     color: #222 !important;
     font-weight: 800 !important;
@@ -10,7 +10,7 @@
 }
 
 .my_login_button_disabled {
-    width: 21.5vw !important;
+    width: 280px !important;
     background-color: grey !important;
     color: #222 !important;
     font-weight: 800 !important;

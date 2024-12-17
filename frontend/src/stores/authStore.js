@@ -10,6 +10,7 @@ const useAuthStore = create((set) => ({
   error: null,
 
   signup: async (formData) => {
+    formData.dob = `${formData.day}-${formData.month}-${formData.year}`;
     console.log(formData);
     set({ isLoading: true, error: null });
     try {
@@ -18,20 +19,25 @@ const useAuthStore = create((set) => ({
         formData
       );
       const { accessToken, refreshToken } = data;
-      set({
-        user: formData,
-        accessToken,
-        refreshToken,
-        isLoading: false,
-      });
+      setTimeout(() => {
+        set({
+          user: formData,
+          accessToken,
+          refreshToken,
+          isLoading: false,
+        });
+      }, 1000);
+
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
     } catch (error) {
-      set({
-        error:
-          error.response?.data?.message || "Signup Failed. Please try again",
-        isLoading: false,
-      });
+      setTimeout(() => {
+        set({
+          error:
+            error.response?.data?.message || "Signup Failed. Please try again",
+          isLoading: false,
+        });
+      }, 1000);
     }
   },
   login: async (formData) => {

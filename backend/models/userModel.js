@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
   },
   favourites: [
     {
-      type: String,
+      type: Number,
     },
   ],
 });

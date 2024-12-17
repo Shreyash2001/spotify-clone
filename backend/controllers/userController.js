@@ -9,7 +9,7 @@ const REFRESH_TOKEN_SECRET =
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, dob, gender } = req.body;
+    const { name, email, password, dob, gender, favourites } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
@@ -29,6 +29,7 @@ const signup = async (req, res) => {
       password: hashedPassword,
       gender,
       dob,
+      favourites,
       refreshToken,
     });
     await newUser.save();
