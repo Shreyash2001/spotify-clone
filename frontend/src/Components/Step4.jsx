@@ -5,8 +5,15 @@ import { motion } from "framer-motion";
 import MyButton from "./MyButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { coverImage } from "../utils/utility";
+import { useNavigate } from "react-router-dom";
 
-function Step4({ selectFavourites, alreadySelectedFavourites, nextClicked }) {
+function Step4({
+  selectFavourites,
+  alreadySelectedFavourites,
+  nextClicked,
+  error,
+}) {
+  const navigate = useNavigate();
   const [favourites, setFavourites] = useState([]);
   const getLanguageCard = (data) => {
     return (
@@ -112,6 +119,32 @@ function Step4({ selectFavourites, alreadySelectedFavourites, nextClicked }) {
           isDisabled={favourites.length > 0 ? false : true}
         />
       </div>
+      {error?.includes("User already") && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "10px",
+          }}
+        >
+          <p style={{ color: "#fff", fontFamily: "Questrial" }}>
+            Already User?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontFamily: "Questrial",
+                fontWeight: "500",
+              }}
+            >
+              {" "}
+              Login Now
+            </span>
+          </p>
+        </div>
+      )}
     </div>
   );
 }

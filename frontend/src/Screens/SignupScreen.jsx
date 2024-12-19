@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignupScreen.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,10 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import useAuthStore from "../stores/authStore";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Alert } from "@mui/material";
 
 function SignupScreen() {
   const [step, setStep] = useState(1);
@@ -25,7 +29,27 @@ function SignupScreen() {
     gender: "",
     favourites: [],
   });
-  const { signup, isLoading, error, clearError } = useAuthStore();
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const { signup, isLoading, error } = useAuthStore();
+
+  useEffect(() => {
+    if (error) {
+      handleClick();
+    }
+  }, [error]);
+
   const navigate = useNavigate();
   const GoogleLoginButton = () => {
     return (
@@ -126,6 +150,7 @@ function SignupScreen() {
             nextClicked={step4NextClicked}
             alreadySelectedFavourites={formData?.favourites}
             selectFavourites={step4SelectedCards}
+            error={error}
           />
         );
       default:
@@ -195,6 +220,19 @@ function SignupScreen() {
       </div>
     );
   };
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <div className="signup">
       <div className="signup_box">
@@ -249,6 +287,21 @@ function SignupScreen() {
         </div>
 
         {step === 1 && getDirectLogin()}
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          action={action}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );

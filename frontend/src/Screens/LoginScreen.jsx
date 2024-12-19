@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LoginScreen.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import MyInput from "../Components/MyInput";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../stores/authStore";
 
 function LoginScreen() {
   const navigate = useNavigate();
+  const { clearError } = useAuthStore();
   const GoogleLoginButton = () => {
     return (
       <div>
@@ -23,6 +25,10 @@ function LoginScreen() {
       </div>
     );
   };
+
+  useEffect(() => {
+    clearError();
+  }, []);
 
   const handleInputChange = (event) => {
     console.log(event.target.value);
