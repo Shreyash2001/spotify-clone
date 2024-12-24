@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginScreen.css";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import MyInput from "../Components/MyInput";
@@ -8,7 +8,11 @@ import useAuthStore from "../stores/authStore";
 
 function LoginScreen() {
   const navigate = useNavigate();
-  const { clearError } = useAuthStore();
+  const { clearError, login } = useAuthStore();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const GoogleLoginButton = () => {
     return (
       <div>
@@ -31,21 +35,41 @@ function LoginScreen() {
   }, []);
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
+    const { value } = event.target;
+    console.log(event.target);
+    setFormData((prevData) => ({
+      ...prevData,
+      email: value,
+    }));
+  };
+  const handleInputPasswordChange = (event) => {
+    const { value } = event.target;
+    console.log(event.target);
+    setFormData((prevData) => ({
+      ...prevData,
+      password: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    login();
   };
 
   const MyForm = () => {
     return (
-      <form className="my_login_form" onSubmit={handleSubmit}>
-        <MyInput label={"Email"} type={"email"} onChange={handleInputChange} />
+      <form className="my_login_form">
+        <MyInput
+          label={"Email"}
+          type={"email"}
+          value={formData?.email}
+          onChange={handleInputChange}
+        />
         <MyInput
           label={"Password"}
           type={"password"}
-          onChange={handleInputChange}
+          onChange={handleInputPasswordChange}
+          value={formData?.password}
         />
         <Button className="login_button">Log In</Button>
       </form>
