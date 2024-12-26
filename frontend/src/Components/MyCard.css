@@ -1,0 +1,27 @@
+h4 {
+    margin: 0px;
+}
+
+.card {
+    width: 14vw;
+    height: 42vh;
+    border-radius: 12px;
+    position: relative;
+}
+
+.hovered-background-card {
+    background-color: rgba(73, 73, 73, 0.11);
+    width: 15.5vw;
+    height: 44vh;
+    border-radius: 12px;
+    position: absolute;
+    top: -10px;
+    left: -11px;
+    z-index: 1;
+    display: none;
+}
+
+.card:hover .hovered-background-card {
+    cursor: pointer;
+    display: block;
+}

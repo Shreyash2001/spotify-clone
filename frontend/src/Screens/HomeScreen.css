@@ -1,0 +1,91 @@
+.homeScreen-content {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 2vw;
+    background-color: #222;
+    margin: 0px 8px;
+    border-radius: 12px;
+    width: 100%;
+    height: calc(100vh - 115px);
+    overflow-y: auto;
+}
+
+.homeScreen-content::-webkit-scrollbar {
+    width: 0;
+}
+
+.homeScreen-content:hover::-webkit-scrollbar {
+    width: 15px;
+}
+
+.homeScreen-content::-webkit-scrollbar-thumb {
+    background-color: rgba(196, 190, 190, 0.178);
+}
+
+.homeScreen-content::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.homeScreen-topMixes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 0px;
+}
+
+/* Container styles */
+.homeScreen-topMix-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 1 calc(17vw - 8px);
+    max-width: calc(20vw - 8px);
+    height: 8vh;
+    background-color: #68656538;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    /* Add some breathing room with padding if needed */
+}
+
+/* Image and title styles */
+.homeScreen-topMix {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.homeScreen-topMix-image {
+    width: 4vw;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.homeScreen-play-button {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translate(-50%, -50%);
+    color: #1db954 !important;
+    border: none;
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: none !important;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+
+}
+
+.homeScreen-topMix-container:hover .homeScreen-play-button {
+    display: flex !important;
+}
