@@ -8,6 +8,7 @@ const useAuthStore = create((set) => ({
   refreshToken: null,
   isLoading: false,
   error: null,
+  success: null,
 
   signup: async (formData) => {
     formData.dob = `${formData.day}-${formData.month}-${formData.year}`;
@@ -43,12 +44,16 @@ const useAuthStore = create((set) => ({
   login: async (formData) => {
     set({ isLoading: true, error: null });
     try {
-      const { data } = await axios.post("/api/auth/login", formData);
+      const { data } = await axios.post(
+        `${BASE_API_URL}/api/auth/login`,
+        formData
+      );
       const { accessToken, refreshToken } = data;
       set({
         accessToken,
         refreshToken,
         isLoading: false,
+        success: true,
       });
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);

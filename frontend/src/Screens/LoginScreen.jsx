@@ -5,10 +5,14 @@ import MyInput from "../Components/MyInput";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../stores/authStore";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Alert } from "@mui/material";
 
 function LoginScreen() {
   const navigate = useNavigate();
-  const { clearError, login } = useAuthStore();
+  const { clearError, login, error, success } = useAuthStore();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,9 +34,46 @@ function LoginScreen() {
     );
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (error) {
+      handleClick();
+    }
+  }, [error]);
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   useEffect(() => {
     clearError();
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      navigate("/");
+    }
+  }, [success]);
 
   const handleInputChange = (event) => {
     const { value } = event.target;
@@ -53,12 +94,12 @@ function LoginScreen() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login();
+    login(formData);
   };
 
   const MyForm = () => {
     return (
-      <form className="my_login_form">
+      <form className="my_login_form" onSubmit={handleSubmit}>
         <MyInput
           label={"Email"}
           type={"email"}
@@ -71,7 +112,9 @@ function LoginScreen() {
           onChange={handleInputPasswordChange}
           value={formData?.password}
         />
-        <Button className="login_button">Log In</Button>
+        <Button type="submit" className="login_button">
+          Log In
+        </Button>
       </form>
     );
   };
@@ -103,7 +146,7 @@ function LoginScreen() {
         </div>
 
         <hr style={{ width: "100%", border: "1px solid #3833336b" }} />
-        <MyForm />
+        {MyForm()}
         <span style={{ margin: "30px 0px", fontSize: "14px" }}>
           Don't Have an Account?{" "}
           <span
@@ -115,6 +158,21 @@ function LoginScreen() {
           </span>
         </span>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        action={action}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

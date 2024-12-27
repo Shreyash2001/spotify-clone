@@ -1,0 +1,58 @@
+.mycarousel-container {
+    display: flex;
+    position: relative;
+}
+
+.mycarousel-children-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0px;
+    overflow-x: scroll;
+    width: 100vw;
+}
+
+.mycarousel-children-container::-webkit-scrollbar {
+    display: none;
+}
+
+.mycarousel-left-arrow {
+    display: flex;
+    align-items: center;
+    background-color: rgba(27, 27, 27, 0.945);
+    border-radius: 52px;
+    position: absolute;
+    top: 30%;
+    left: -20px;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mycarousel-right-arrow {
+    display: flex;
+    align-items: center;
+    background-color: rgba(27, 27, 27, 0.945);
+    border-radius: 52px;
+    position: absolute;
+    top: 30%;
+    right: -20px;
+    color: white;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mycarousel-container:hover .mycarousel-left-arrow {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.mycarousel-container:hover .mycarousel-right-arrow {
+    transform: translateX(0);
+    opacity: 1;
+}

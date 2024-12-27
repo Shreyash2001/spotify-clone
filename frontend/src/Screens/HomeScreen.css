@@ -15,7 +15,7 @@
 }
 
 .homeScreen-content:hover::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
 }
 
 .homeScreen-content::-webkit-scrollbar-thumb {
@@ -88,4 +88,8 @@
 
 .homeScreen-topMix-container:hover .homeScreen-play-button {
     display: flex !important;
+}
+
+.homeScreen-play-button:hover {
+    color: #4bee74 !important;
 }

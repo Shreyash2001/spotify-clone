@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomeScreen.css";
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
@@ -6,8 +6,45 @@ import SubTopBar from "../Components/SubTopBar";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { motion } from "framer-motion";
 import MyCard from "../Components/MyCard";
+import { useDataStore } from "../stores/dataStore";
+import MyCarousel from "../Components/MyCarousel";
 
 function HomeScreen() {
+  const { getData, data, isLoading } = useDataStore();
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setResults(data);
+    }
+  }, [isLoading, data]);
+
+  console.log(results);
+
+  useEffect(() => {
+    getData();
+  }, []);
+  const getCards = () => {
+    return (
+      <div>
+        <div>
+          <h1 style={{ margin: "0px" }} className="homeScreen-heading">
+            {results?.title}
+          </h1>
+        </div>
+        <MyCarousel>
+          {results?.data?.map((result) => (
+            <MyCard
+              key={result?.id}
+              title={result?.title}
+              description={result?.description}
+              image={result?.image}
+            />
+          ))}
+        </MyCarousel>
+      </div>
+    );
+  };
   const TopMixes = () => {
     return (
       <div className="homeScreen-topMixes">
@@ -22,10 +59,10 @@ function HomeScreen() {
                 />
                 <h4 className="homeScreen-topMix-title">Diljeet Top Mix</h4>
               </div>
-              <motion.div whileHover={{ scale: 1.04 }}>
+              <motion.div whileHover={{ scale: 1.02 }}>
                 <PlayCircleIcon
                   className="homeScreen-play-button"
-                  sx={{ color: "#1db954", margin: "0px 2px", fontSize: "30px" }}
+                  sx={{ margin: "0px 2px", fontSize: "40px" }}
                 />
               </motion.div>
             </div>
@@ -42,7 +79,9 @@ function HomeScreen() {
         <div className="homeScreen-content">
           <SubTopBar />
           <TopMixes />
-          <MyCard />
+          {/* <MyCard /> */}
+          {getCards()}
+          {getCards()}
         </div>
       </div>
     </div>

@@ -3,8 +3,9 @@ h4 {
 }
 
 .card {
+    min-width: 14vw;
     width: 14vw;
-    max-height: 42vh;
+    height: 42vh;
     border-radius: 12px;
     position: relative;
 }
@@ -35,6 +36,7 @@ h4 {
     transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
     margin: 0px 5px;
+    color: #1db954;
 }
 
 .card:hover .mycard-play-icon {
@@ -44,7 +46,7 @@ h4 {
 }
 
 .mycard-play-icon:hover {
-    transform: scale(1.09) !important;
-    color: #30e05c !important;
+    transform: scale(1.02) !important;
+    color: #4bee74 !important;
     cursor: pointer;
 }
