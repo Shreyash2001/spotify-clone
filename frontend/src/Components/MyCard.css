@@ -4,7 +4,7 @@ h4 {
 
 .card {
     width: 14vw;
-    height: 42vh;
+    max-height: 42vh;
     border-radius: 12px;
     position: relative;
 }
@@ -17,11 +17,34 @@ h4 {
     position: absolute;
     top: -10px;
     left: -11px;
-    z-index: 1;
+    z-index: 0;
     display: none;
 }
 
 .card:hover .hovered-background-card {
     cursor: pointer;
     display: block;
+}
+
+.mycard-play-icon {
+    position: absolute;
+    bottom: 28%;
+    right: 0%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    margin: 0px 5px;
+}
+
+.card:hover .mycard-play-icon {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.mycard-play-icon:hover {
+    transform: scale(1.09) !important;
+    color: #30e05c !important;
+    cursor: pointer;
 }

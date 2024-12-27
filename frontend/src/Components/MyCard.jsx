@@ -18,23 +18,9 @@ function MyCard() {
           borderRadius: "10px",
         }}
       />
-      <motion.div
-        initial={{ y: 20, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        animate={{
-          y: 20,
-          opacity: 0,
-        }}
-        variants={{
-          hover: {
-            y: 0,
-            opacity: 1,
-          },
-        }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <PlayCircleIcon style={{ color: "#1db954" }} />
-      </motion.div>
+      <div className="mycard-play-icon">
+        <PlayCircleIcon style={{ color: "#1db954", fontSize: "60px" }} />
+      </div>
       <h4 className="card-title">Diljeet Top Mix</h4>
       <p style={{ color: "#888", margin: "2px 0px" }} className="card-title">
         asdhcas sdsd sdfjsdjk sdfhsdfh sdjfhsd sefksj
