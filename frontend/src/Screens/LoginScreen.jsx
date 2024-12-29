@@ -145,7 +145,9 @@ function LoginScreen() {
           <GoogleLoginButton />
         </div>
 
-        <hr style={{ width: "100%", border: "1px solid #3833336b" }} />
+        <hr
+          style={{ width: "100%", border: "1px solid rgba(56, 51, 51, 0.15)" }}
+        />
         {MyForm()}
         <span style={{ margin: "30px 0px", fontSize: "14px" }}>
           Don't Have an Account?{" "}
