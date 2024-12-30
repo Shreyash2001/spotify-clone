@@ -1,10 +1,10 @@
 const express = require("express");
 const { adminProtect, checkPermission } = require("../middleware/auth");
-const { addArtistController } = require("../controllers/artistController");
+const { addSongController } = require("../controllers/songController");
 const router = express.Router();
 
 router
-  .route("/add-artist")
-  .post(adminProtect, checkPermission("addArtist"), addArtistController);
+  .route("/add-song")
+  .post(adminProtect, checkPermission("addSongs"), addSongController);
 
 module.exports = router;
