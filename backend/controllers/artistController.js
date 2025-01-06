@@ -2,10 +2,17 @@ const Artist = require("../models/artistModel");
 
 const addArtistController = async (req, res) => {
   try {
-    const { name, imageUrl, dob } = req.body;
+    const { name, imageUrl, dob, email } = req.body;
 
+    const alreadyExists = await Artist.findOne({ email: email });
+    if (alreadyExists) {
+      return res
+        .status(400)
+        .json({ message: "Artist already exists", status: "error" });
+    }
     const artist = await Artist.create({
       name,
+      email,
       imageUrl,
       dob,
     });

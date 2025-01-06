@@ -5,6 +5,11 @@ const artistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   imageUrl: {
     type: String,
     required: true,
