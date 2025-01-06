@@ -1,13 +1,30 @@
 const Song = require("../models/songModel");
 const addSongController = async (req, res) => {
   try {
-    const { title, artist, genre, imageUrl, audioUrl, releaseDate } = req.body;
-    const song = new Song({
+    const {
+      user,
       title,
       artist,
       genre,
       imageUrl,
       audioUrl,
+      releaseDate,
+      videoUrl,
+    } = req.body;
+    const songExists = await Song.findOne({ title: title });
+    if (songExists) {
+      return res
+        .status(400)
+        .json({ message: "Song already exists", status: "error" });
+    }
+    const song = new Song({
+      user,
+      title,
+      artist,
+      genre,
+      imageUrl,
+      audioUrl,
+      videoUrl,
       releaseDate,
     });
     await song.save();

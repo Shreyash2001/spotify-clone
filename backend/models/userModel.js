@@ -38,6 +38,12 @@ const userSchema = mongoose.Schema({
       type: String,
     },
   ],
+  playlist: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Playlist",
+    },
+  ],
   dob: {
     type: String,
     required: true,
