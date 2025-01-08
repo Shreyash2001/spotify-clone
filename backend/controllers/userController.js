@@ -80,27 +80,4 @@ const login = async (req, res) => {
   }
 };
 
-const playlistController = async (req, res) => {
-  try {
-    const { title, description, songId, imageUrl, isPublic } = req.body;
-    const playlist = await Playlist.create({
-      user: req.user.id,
-      title,
-      description,
-      songs: [songId],
-      imageUrl,
-      isPublic,
-    });
-    if (!playlist) {
-      return res.status(400).json({ message: "Failed to create playlist." });
-    }
-    return res.status(201).json({ playlist });
-  } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Server error. Please try again later." });
-  }
-};
-
-module.exports = { signup, login, playlistController };
+module.exports = { signup, login };
