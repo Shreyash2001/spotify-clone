@@ -13,7 +13,7 @@ const PlaylistSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    songs: [
+    songs: [ 
       {
         type: mongoose.Types.ObjectId,
         ref: "Song",
