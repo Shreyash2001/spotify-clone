@@ -6,6 +6,7 @@ dotenv.config();
 const authenticationRoutes = require("./routes/userRoutes");
 const artistRoutes = require("./routes/artistRoutes");
 const songRoutes = require("./routes/songRoutes");
+const playlistRoutes = require("./routes/playlistRoutes");
 const app = express();
 
 app.use(express.json());
@@ -17,6 +18,7 @@ connectDB();
 app.use("/api/auth", authenticationRoutes);
 app.use("/api/artist", artistRoutes);
 app.use("/api/song", songRoutes);
+app.use("/api/playlist", playlistRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log("listening on port " + PORT));
