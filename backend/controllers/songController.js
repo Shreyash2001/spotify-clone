@@ -10,6 +10,7 @@ const addSongController = async (req, res) => {
       audioUrl,
       releaseDate,
       videoUrl,
+      duration,
     } = req.body;
     const songExists = await Song.findOne({ title: title });
     if (songExists) {
@@ -26,11 +27,12 @@ const addSongController = async (req, res) => {
       audioUrl,
       videoUrl,
       releaseDate,
+      duration,
     });
     await song.save();
     return res
       .status(201)
-      .json({ message: "Song added successfully", status: "success" });
+      .json({ message: "Song added successfully", status: "success", song });
   } catch (error) {
     res.status(500).json({ message: error.message, status: "error" });
   }

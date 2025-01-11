@@ -10,9 +10,15 @@ const songSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    artist: {
-      type: mongoose.Types.ObjectId,
-      ref: "Artist",
+    artist: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Artist",
+      },
+    ],
+    duration: {
+      type: Number,
+      required: true,
     },
     album: {
       type: String,
@@ -21,6 +27,15 @@ const songSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    popularity: {
+      type: String,
+    },
+    likes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: true,
+      },
+    ],
     releaseDate: {
       type: String,
       required: true,
@@ -40,9 +55,15 @@ const songSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    playlists: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Playlist",
+      },
+    ],
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 

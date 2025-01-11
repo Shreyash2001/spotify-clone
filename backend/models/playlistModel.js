@@ -29,7 +29,7 @@ const PlaylistSchema = mongoose.Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 const Playlist = mongoose.model("Playlist", PlaylistSchema);
