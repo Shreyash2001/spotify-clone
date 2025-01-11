@@ -24,6 +24,8 @@ const artistSchema = mongoose.Schema({
       ref: "Song",
     },
   ],
+}, {
+  timestamps: true,
 });
 
 const Artist = mongoose.model("Artist", artistSchema);
