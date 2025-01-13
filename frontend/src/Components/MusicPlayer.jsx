@@ -79,7 +79,7 @@ function MusicPlayer() {
   return (
     <div className="musicplayer">
       {getMusicDetails()}
-      <Player />
+      <Player volume={volume} />
       {getRightControlDetails()}
     </div>
   );

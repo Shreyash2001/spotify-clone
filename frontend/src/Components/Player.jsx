@@ -5,7 +5,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 
-function Player() {
+function Player({ volume }) {
   const audioRef = useRef(null);
   const [progress, setProgress] = useState(0);
 
@@ -57,6 +57,12 @@ function Player() {
       window.removeEventListener("keydown", handleKeydown);
     };
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume]);
 
   return (
     <div className="musicplayer" style={styles.musicPlayer}>
