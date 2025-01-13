@@ -4,16 +4,20 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
 function Player({ volume }) {
   const audioRef = useRef(null);
   const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayPause = () => {
     if (audioRef.current.paused) {
       audioRef.current.play();
+      setIsPlaying(true);
     } else {
       audioRef.current.pause();
+      setIsPlaying(false);
     }
   };
 
@@ -46,6 +50,15 @@ function Player({ volume }) {
         audio.currentTime = Math.max(audio.currentTime - 5, 0); // Seek backward by 5 seconds
       } else if (event.key === "ArrowRight") {
         audio.currentTime = Math.min(audio.currentTime + 5, audio.duration); // Seek forward by 5 seconds
+      }
+      if (event.key === " ") {
+        if (audio.paused) {
+          audio.play();
+          setIsPlaying(true);
+        } else {
+          audio.pause();
+          setIsPlaying(false);
+        }
       }
     };
 
@@ -85,7 +98,13 @@ function Player({ volume }) {
             <SkipPreviousIcon />
           </div>
           <div style={{ margin: "0px 10px" }} onClick={handlePlayPause}>
-            <PlayCircleIcon style={{ fontSize: "35px", cursor: "pointer" }} />
+            {isPlaying ? (
+              <PauseCircleIcon
+                style={{ fontSize: "35px", cursor: "pointer" }}
+              />
+            ) : (
+              <PlayCircleIcon style={{ fontSize: "35px", cursor: "pointer" }} />
+            )}
           </div>
           <div style={{ margin: "0px 20px" }}>
             <SkipNextIcon />
