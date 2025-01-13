@@ -1,22 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
-import VolumeDown from "@mui/icons-material/VolumeDown";
-import Slider from "@mui/material/Slider";
-import { Stack } from "@mui/material";
-import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
 function Player() {
   const audioRef = useRef(null);
   const [progress, setProgress] = useState(0);
-  const [volume, setVolume] = useState(30);
-
-  const handleChangeVolume = (event, newValue) => {
-    setVolume(newValue);
-  };
 
   const handlePlayPause = () => {
     if (audioRef.current.paused) {
@@ -32,28 +23,62 @@ function Player() {
   };
 
   const handleSeek = (event) => {
-    const newTime =
-      (event.nativeEvent.offsetX / event.target.offsetWidth) *
-      audioRef.current.duration;
+    const container = event.currentTarget;
+    const containerRect = container.getBoundingClientRect();
+    const clickX = event.clientX - containerRect.left;
+    const newTime = (clickX / containerRect.width) * audioRef.current.duration;
     audioRef.current.currentTime = newTime;
   };
+
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  useEffect(() => {
+    const handleKeydown = (event) => {
+      const audio = audioRef.current;
+      if (!audio) return;
+
+      // Check if the left or right arrow key is pressed
+      if (event.key === "ArrowLeft") {
+        audio.currentTime = Math.max(audio.currentTime - 5, 0); // Seek backward by 5 seconds
+      } else if (event.key === "ArrowRight") {
+        audio.currentTime = Math.min(audio.currentTime + 5, audio.duration); // Seek forward by 5 seconds
+      }
+    };
+
+    // Add keydown listener
+    window.addEventListener("keydown", handleKeydown);
+
+    // Clean up listener on unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, []);
 
   return (
     <div className="musicplayer" style={styles.musicPlayer}>
       <audio
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
-        src="your-music-file.mp3"
+        src="https://res.cloudinary.com/cqn/video/upload/v1736798827/vlog-music-beat-trailer-showreel-promo-background-intro-theme-274290_mzg49g.mp3"
       ></audio>
       <div style={styles.controls}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <div>
             <ShuffleIcon />
           </div>
           <div style={{ margin: "0px 20px" }}>
             <SkipPreviousIcon />
           </div>
-          <div style={{ margin: "0px 20px" }} onClick={handlePlayPause}>
+          <div style={{ margin: "0px 10px" }} onClick={handlePlayPause}>
             <PlayCircleIcon style={{ fontSize: "35px", cursor: "pointer" }} />
           </div>
           <div style={{ margin: "0px 20px" }}>
@@ -63,40 +88,24 @@ function Player() {
             <RepeatIcon />
           </div>
         </div>
-
-        <div style={styles.progressBarContainer} onClick={handleSeek}>
-          <div
-            style={{
-              ...styles.progressBar,
-              width: `${progress}%`,
-            }}
-          ></div>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          margin: "0px 50px",
-        }}
-      >
-        <div style={{ margin: "0px 30px" }}>
-          <SmartDisplayIcon />
-        </div>
-        <div style={{ width: "250px" }}>
-          <Stack
-            spacing={2}
-            direction="row"
-            sx={{ alignItems: "center", mb: 1 }}
-          >
-            <VolumeDown />
-            <Slider
-              aria-label="Volume"
-              value={volume}
-              onChange={handleChangeVolume}
-            />
-          </Stack>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span style={styles.currentTime}>
+            {formatTime(audioRef.current?.currentTime || 0)}
+          </span>
+          <div style={styles.progressBarContainer} onClick={handleSeek}>
+            <div
+              style={{
+                ...styles.progressBar,
+                width: `${progress}%`,
+              }}
+            ></div>
+          </div>
+          <span style={styles.totalTime}>
+            {formatTime(
+              audioRef.current?.duration -
+                (audioRef.current?.currentTime || 0) || 0
+            )}
+          </span>
         </div>
       </div>
     </div>
@@ -108,7 +117,7 @@ const styles = {
     width: "300px",
     borderRadius: "10px",
     position: "absolute",
-    left: "30%",
+    left: "25%",
   },
   controls: {
     display: "flex",
@@ -135,8 +144,16 @@ const styles = {
   },
   progressBar: {
     height: "100%",
-    backgroundColor: "#007bff",
+    backgroundColor: "#1db954",
     borderRadius: "5px",
+  },
+  currentTime: {
+    color: "grey",
+    margin: "0px 10px",
+  },
+  totalTime: {
+    color: "grey",
+    margin: "0px 10px",
   },
 };
 

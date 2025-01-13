@@ -2,29 +2,17 @@ import React, { useRef, useState } from "react";
 import "./MusicPlayer.css";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import Player from "./Player";
+import VolumeDown from "@mui/icons-material/VolumeDown";
+import Slider from "@mui/material/Slider";
+import { Stack } from "@mui/material";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
 function MusicPlayer() {
-  const audioRef = useRef(null); // Reference to the audio element
-  const [progress, setProgress] = useState(0); // Progress bar value (0 to 100)
+  const [volume, setVolume] = useState(30);
 
-  const handlePlayPause = () => {
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    const { currentTime, duration } = audioRef.current;
-    setProgress((currentTime / duration) * 100);
-  };
-
-  const handleSeek = (event) => {
-    const newTime =
-      (event.nativeEvent.offsetX / event.target.offsetWidth) *
-      audioRef.current.duration;
-    audioRef.current.currentTime = newTime;
+  const handleChangeVolume = (event, newValue) => {
+    setVolume(newValue);
   };
   const getMusicDetails = () => {
     return (
@@ -49,7 +37,45 @@ function MusicPlayer() {
       </div>
     );
   };
-  const getRightControlDetails = () => {};
+  const getRightControlDetails = () => {
+    return (
+      <div className="rightControls_container">
+        <div style={{ margin: "0px 30px" }}>
+          <SmartDisplayIcon />
+        </div>
+        <div style={{ width: "250px" }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ alignItems: "center", mb: 1 }}
+          >
+            <VolumeDown />
+            <Slider
+              aria-label="Volume"
+              value={volume}
+              onChange={handleChangeVolume}
+              sx={{
+                "& .MuiSlider-thumb": {
+                  color: "#fff",
+                  width: "15px",
+                  height: "15px",
+                },
+                "& .MuiSlider-track": {
+                  color: "#1db954",
+                },
+                "& .MuiSlider-rail": {
+                  color: "grey",
+                },
+              }}
+            />
+          </Stack>
+        </div>
+        <div style={{ margin: "0px 10px" }}>
+          <FullscreenIcon />
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="musicplayer">
       {getMusicDetails()}

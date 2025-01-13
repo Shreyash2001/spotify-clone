@@ -29,3 +29,11 @@
     border-radius: 5px;
     object-fit: cover;
 }
+
+.rightControls_container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 0px;
+    margin: 0px 10px;
+}
