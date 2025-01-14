@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./MusicPlayer.css";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import Player from "./Player";
@@ -9,10 +9,12 @@ import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 
 function MusicPlayer() {
   const [volume, setVolume] = useState(30);
   const [volumeIcon, setVolumeIcon] = useState(<VolumeDown />);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleChangeVolume = (event, newValue) => {
     volumeIconSetter(newValue);
@@ -27,6 +29,70 @@ function MusicPlayer() {
       setVolumeIcon(<VolumeOffIcon />);
     }
   };
+
+  const toggleFullscreen = () => {
+    if (!isFullscreen) {
+      const elem = document.documentElement; // Fullscreen the document
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        // Firefox
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        // Chrome, Safari, Opera
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        // IE/Edge
+        elem.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        // Firefox
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        // Chrome, Safari, Opera
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        // IE/Edge
+        document.msExitFullscreen();
+      }
+    }
+  };
+
+  const handleFullscreenChange = () => {
+    if (document.fullscreenElement) {
+      setIsFullscreen(true);
+    } else {
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add fullscreen change event listeners
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+    document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
+    // Cleanup event listeners on unmount
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      );
+      document.removeEventListener(
+        "mozfullscreenchange",
+        handleFullscreenChange
+      );
+      document.removeEventListener(
+        "MSFullscreenChange",
+        handleFullscreenChange
+      );
+    };
+  }, []);
   const getMusicDetails = () => {
     return (
       <div className="music_player_details">
@@ -83,8 +149,11 @@ function MusicPlayer() {
             />
           </Stack>
         </div>
-        <div style={{ margin: "0px 10px" }}>
-          <FullscreenIcon />
+        <div
+          onClick={toggleFullscreen}
+          style={{ margin: "0px 10px", cursor: "pointer" }}
+        >
+          {!isFullscreen ? <FullscreenIcon /> : <FullscreenExitIcon />}
         </div>
       </div>
     );
