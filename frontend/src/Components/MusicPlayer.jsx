@@ -7,12 +7,25 @@ import Slider from "@mui/material/Slider";
 import { Stack } from "@mui/material";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
 function MusicPlayer() {
   const [volume, setVolume] = useState(30);
+  const [volumeIcon, setVolumeIcon] = useState(<VolumeDown />);
 
   const handleChangeVolume = (event, newValue) => {
+    volumeIconSetter(newValue);
     setVolume(newValue);
+  };
+  const volumeIconSetter = (val) => {
+    if (val > 0 && val <= 50) {
+      setVolumeIcon(<VolumeDown />);
+    } else if (val > 50) {
+      setVolumeIcon(<VolumeUpIcon />);
+    } else {
+      setVolumeIcon(<VolumeOffIcon />);
+    }
   };
   const getMusicDetails = () => {
     return (
@@ -49,7 +62,7 @@ function MusicPlayer() {
             direction="row"
             sx={{ alignItems: "center", mb: 1 }}
           >
-            <VolumeDown />
+            {volumeIcon}
             <Slider
               aria-label="Volume"
               value={volume}
