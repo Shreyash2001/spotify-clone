@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./MyCarousel.css";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function MyCarousel({ children }) {
+  const carouselRef = useRef(null);
   function sideScroll(element, direction, speed, distance, step) {
     var scrollAmount = 0;
     var slideTimer = setInterval(function () {
@@ -20,22 +21,10 @@ function MyCarousel({ children }) {
   }
 
   const rightScroll = () => {
-    sideScroll(
-      document.getElementById("mycarousel-children-container"),
-      "right",
-      10,
-      1500,
-      20
-    );
+    sideScroll(carouselRef.current, "right", 10, 1500, 20);
   };
   const leftScroll = () => {
-    sideScroll(
-      document.getElementById("mycarousel-children-container"),
-      "left",
-      10,
-      1500,
-      20
-    );
+    sideScroll(carouselRef.current, "left", 10, 1500, 20);
   };
   return (
     <div className="mycarousel-container">
@@ -45,6 +34,7 @@ function MyCarousel({ children }) {
         />
       </div>
       <div
+        ref={carouselRef}
         id="mycarousel-children-container"
         className="mycarousel-children-container"
       >

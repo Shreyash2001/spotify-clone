@@ -24,7 +24,7 @@ function HomeScreen() {
   useEffect(() => {
     getData();
   }, []);
-  const getCards = () => {
+  const getCards = (musicData) => {
     return (
       <div>
         <div>
@@ -33,7 +33,7 @@ function HomeScreen() {
           </h1>
         </div>
         <MyCarousel>
-          {results?.data?.map((result) => (
+          {musicData?.data?.map((result) => (
             <MyCard
               key={result?.id}
               title={result?.title}
@@ -80,8 +80,8 @@ function HomeScreen() {
           <SubTopBar />
           <TopMixes />
           {/* <MyCard /> */}
-          {getCards()}
-          {getCards()}
+          {getCards(results)}
+          {getCards(results)}
         </div>
       </div>
     </div>
