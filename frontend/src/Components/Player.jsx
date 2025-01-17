@@ -8,6 +8,7 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
 function Player({ volume }) {
   const audioRef = useRef(null);
+  const progressBarRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -38,6 +39,10 @@ function Player({ volume }) {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const handleMouseDown = (e) => {
+    handleSeek(e);
   };
 
   useEffect(() => {
@@ -117,7 +122,12 @@ function Player({ volume }) {
           <span style={styles.currentTime}>
             {formatTime(audioRef.current?.currentTime || 0)}
           </span>
-          <div style={styles.progressBarContainer} onClick={handleSeek}>
+          <div
+            ref={progressBarRef}
+            style={styles.progressBarContainer}
+            onClick={handleSeek}
+            onMouseDown={handleMouseDown}
+          >
             <div
               style={{
                 ...styles.progressBar,
